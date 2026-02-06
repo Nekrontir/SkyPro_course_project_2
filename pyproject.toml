@@ -8,7 +8,8 @@ authors = [
 readme = "README.md"
 requires-python = ">=3.13,<4.0"
 dependencies = [
-    "poetry-core (>=2.3.0,<3.0.0)"
+    "poetry-core (>=2.3.0,<3.0.0)",
+    "pytest (>=8.0.2,<10.0.0)"
 ]
 
 
@@ -25,8 +26,9 @@ lint = [
 ]
 dev = [
     "pytest-cov (>=7.0.0,<8.0.0)",
-    "pytest (>=9.0.2,<10.0.0)",
-    "requests (>=2.32.5,<3.0.0)"
+    "pytest (>=8.0.2,<10.0.0)",
+    "requests (>=2.32.5,<3.0.0)",
+    "types-requests (>=2.32.4.20260107,<3.0.0.0)"
 ]
 
 [tool.mypy]
