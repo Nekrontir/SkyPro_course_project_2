@@ -36,7 +36,8 @@ def filter_vacancies(vacancies: List[Vacancy], filter_words: List[str]) -> List[
     return filtered
 
 
-def get_vacancies_by_salary(vacancies: List[Vacancy], salary_range: Optional[str]) -> List[Vacancy]:
+def get_vacancies_by_salary(vacancies: List[Vacancy],
+                            salary_range: Optional[str]) -> List[Vacancy]:
     """
     Фильтрует вакансии по диапазону зарплат.
 
@@ -51,8 +52,8 @@ def get_vacancies_by_salary(vacancies: List[Vacancy], salary_range: Optional[str
         return vacancies
 
     try:
-        if "-" in salary_range:
-            salary_parts = salary_range.split("-")
+        if '-' in salary_range:
+            salary_parts = salary_range.split('-')
             if len(salary_parts) == 2:
                 salary_from, salary_to = map(int, salary_parts)
                 filtered: List[Vacancy] = []
@@ -60,12 +61,12 @@ def get_vacancies_by_salary(vacancies: List[Vacancy], salary_range: Optional[str
                     vac_from = vacancy.salary_from
                     vac_to = vacancy.salary_to
                     if vac_from > 0 and vac_to > 0:
-                        if vac_from >= salary_from and vac_to <= salary_to:
+                        if not (vac_to < salary_from or vac_from > salary_to):
                             filtered.append(vacancy)
                 return filtered
         else:
             salary_min = int(salary_range)
-            filtered = []
+            filtered: List[Vacancy] = []
             for vacancy in vacancies:
                 if vacancy.avg_salary >= salary_min:
                     filtered.append(vacancy)
