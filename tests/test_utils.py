@@ -1,13 +1,9 @@
-import pytest
-from src.utils import (
-    filter_vacancies,
-    get_vacancies_by_salary,
-    sort_vacancies,
-    get_top_vacancies,
-    print_vacancies
-)
-from src.vacancy import Vacancy
 from typing import List
+
+import pytest
+
+from src.utils import filter_vacancies, get_top_vacancies, get_vacancies_by_salary, print_vacancies, sort_vacancies
+from src.vacancy import Vacancy
 
 
 class TestFilterVacancies:
@@ -46,16 +42,8 @@ class TestFilterVacancies:
 
     def test_filter_vacancies_in_description(self) -> None:
         """Тест фильтрации по тексту в описании."""
-        vacancy1 = Vacancy(
-            name="Developer",
-            url="url1",
-            requirements="Знание Python и Django"
-        )
-        vacancy2 = Vacancy(
-            name="Developer",
-            url="url2",
-            requirements="Знание Java и Spring"
-        )
+        vacancy1 = Vacancy(name="Developer", url="url1", requirements="Знание Python и Django")
+        vacancy2 = Vacancy(name="Developer", url="url2", requirements="Знание Java и Spring")
 
         vacancies = [vacancy1, vacancy2]
         filtered = filter_vacancies(vacancies, ["Django"])
@@ -181,7 +169,7 @@ class TestGetTopVacancies:
         vacancies = [
             Vacancy("Dev1", "url1", 100000, 150000),
             Vacancy("Dev2", "url2", 80000, 120000),
-            Vacancy("Dev3", "url3", 200000, 250000)
+            Vacancy("Dev3", "url3", 200000, 250000),
         ]
 
         top = get_top_vacancies(vacancies, 2)
@@ -191,10 +179,7 @@ class TestGetTopVacancies:
 
     def test_get_top_vacancies_more_than_available(self) -> None:
         """Тест получения топ N, когда N больше количества вакансий."""
-        vacancies = [
-            Vacancy("Dev1", "url1", 100000, 150000),
-            Vacancy("Dev2", "url2", 80000, 120000)
-        ]
+        vacancies = [Vacancy("Dev1", "url1", 100000, 150000), Vacancy("Dev2", "url2", 80000, 120000)]
 
         top = get_top_vacancies(vacancies, 5)
 
@@ -202,10 +187,7 @@ class TestGetTopVacancies:
 
     def test_get_top_vacancies_zero_or_negative(self) -> None:
         """Тест получения топ 0 или отрицательного числа."""
-        vacancies = [
-            Vacancy("Dev1", "url1", 100000, 150000),
-            Vacancy("Dev2", "url2", 80000, 120000)
-        ]
+        vacancies = [Vacancy("Dev1", "url1", 100000, 150000), Vacancy("Dev2", "url2", 80000, 120000)]
 
         # top_n = 0
         top = get_top_vacancies(vacancies, 0)
@@ -232,8 +214,9 @@ class TestPrintVacancies:
         captured = capsys.readouterr()
         assert "По вашему запросу вакансий не найдено" in captured.out
 
-    def test_print_vacancies_with_data(self, sample_vacancy_list: List[Vacancy],
-                                       capsys: pytest.CaptureFixture[str]) -> None:
+    def test_print_vacancies_with_data(
+        self, sample_vacancy_list: List[Vacancy], capsys: pytest.CaptureFixture[str]
+    ) -> None:
         """Тест вывода списка вакансий."""
         print_vacancies(sample_vacancy_list[:2])
 
@@ -256,11 +239,7 @@ class TestPrintVacancies:
     def test_print_vacancies_truncated_requirements(self, capsys: pytest.CaptureFixture[str]) -> None:
         """Тест вывода вакансии с обрезанными требованиями."""
         long_requirements = "Требование " * 30
-        vacancy = Vacancy(
-            name="Developer",
-            url="url",
-            requirements=long_requirements
-        )
+        vacancy = Vacancy(name="Developer", url="url", requirements=long_requirements)
 
         print_vacancies([vacancy])
 

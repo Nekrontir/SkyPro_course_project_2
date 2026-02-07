@@ -1,18 +1,19 @@
 import json
 from pathlib import Path
-from src.saver import JSONSaver, CSVSaver, TXTSaver, VacancySaver
+
+from src.saver import CSVSaver, JSONSaver, TXTSaver, VacancySaver
 from src.vacancy import Vacancy
+
 
 class TestVacancySaver:
     """Тесты для абстрактного класса VacancySaver."""
 
     def test_abstract_methods_exist(self) -> None:
         """Тест, что абстрактные методы определены."""
-        assert hasattr(VacancySaver, 'add_vacancy')
-        assert hasattr(VacancySaver, 'get_vacancies')
-        assert hasattr(VacancySaver, 'delete_vacancy')
-        assert hasattr(VacancySaver, 'clear')
-
+        assert hasattr(VacancySaver, "add_vacancy")
+        assert hasattr(VacancySaver, "get_vacancies")
+        assert hasattr(VacancySaver, "delete_vacancy")
+        assert hasattr(VacancySaver, "clear")
 
 
 class TestJSONSaver:
@@ -36,40 +37,32 @@ class TestJSONSaver:
 
         assert temp_json_file.exists()
 
-        with open(temp_json_file, 'r', encoding='utf-8') as f:
+        with open(temp_json_file, "r", encoding="utf-8") as f:
             data = json.load(f)
 
         assert len(data) == 1
         assert data[0]["name"] == "Python Developer"
         assert data[0]["id"] == sample_vacancy.id
 
-    def test_add_vacancy_no_duplicates(
-            self,
-            temp_json_file: Path,
-            sample_vacancy: Vacancy
-    ) -> None:
+    def test_add_vacancy_no_duplicates(self, temp_json_file: Path, sample_vacancy: Vacancy) -> None:
         """Тест, что дубликаты вакансий не добавляются."""
         saver = JSONSaver(str(temp_json_file))
 
         saver.add_vacancy(sample_vacancy)
         saver.add_vacancy(sample_vacancy)
 
-        with open(temp_json_file, 'r', encoding='utf-8') as f:
+        with open(temp_json_file, "r", encoding="utf-8") as f:
             data = json.load(f)
 
         assert len(data) == 1
 
-    def test_add_vacancies(
-            self,
-            temp_json_file: Path,
-            sample_vacancy_list: list
-    ) -> None:
+    def test_add_vacancies(self, temp_json_file: Path, sample_vacancy_list: list) -> None:
         """Тест добавления нескольких вакансий."""
         saver = JSONSaver(str(temp_json_file))
 
         saver.add_vacancies(sample_vacancy_list)
 
-        with open(temp_json_file, 'r', encoding='utf-8') as f:
+        with open(temp_json_file, "r", encoding="utf-8") as f:
             data = json.load(f)
 
         assert len(data) == len(sample_vacancy_list)
@@ -82,11 +75,7 @@ class TestJSONSaver:
 
         assert vacancies == []
 
-    def test_get_vacancies_with_data(
-            self,
-            temp_json_file: Path,
-            sample_vacancy: Vacancy
-    ) -> None:
+    def test_get_vacancies_with_data(self, temp_json_file: Path, sample_vacancy: Vacancy) -> None:
         """Тест получения вакансий из файла с данными."""
         saver = JSONSaver(str(temp_json_file))
         saver.add_vacancy(sample_vacancy)
@@ -97,11 +86,7 @@ class TestJSONSaver:
         assert isinstance(vacancies[0], Vacancy)
         assert vacancies[0].name == "Python Developer"
 
-    def test_get_vacancies_with_keyword_filter(
-            self,
-            temp_json_file: Path,
-            sample_vacancy_list: list
-    ) -> None:
+    def test_get_vacancies_with_keyword_filter(self, temp_json_file: Path, sample_vacancy_list: list) -> None:
         """Тест фильтрации вакансий по ключевому слову."""
         saver = JSONSaver(str(temp_json_file))
         saver.add_vacancies(sample_vacancy_list)
@@ -115,11 +100,7 @@ class TestJSONSaver:
 
         assert len(filtered) == 3
 
-    def test_get_vacancies_with_salary_filter(
-            self,
-            temp_json_file: Path,
-            sample_vacancy_list: list
-    ) -> None:
+    def test_get_vacancies_with_salary_filter(self, temp_json_file: Path, sample_vacancy_list: list) -> None:
         """Тест фильтрации вакансий по зарплате."""
         saver = JSONSaver(str(temp_json_file))
         saver.add_vacancies(sample_vacancy_list)
@@ -133,10 +114,7 @@ class TestJSONSaver:
 
         assert len(filtered) == 1
 
-    def test_delete_vacancy(
-            self,
-            temp_json_file: Path
-    ) -> None:
+    def test_delete_vacancy(self, temp_json_file: Path) -> None:
         """Тест удаления вакансии из файла."""
         # Создаем простые вакансии
         vacancy1 = Vacancy("Dev1", "url1", 100000, 150000)
@@ -164,7 +142,7 @@ class TestJSONSaver:
 
         assert vacancies == []
 
-        with open(temp_json_file, 'r', encoding='utf-8') as f:
+        with open(temp_json_file, "r", encoding="utf-8") as f:
             data = json.load(f)
 
         assert data == []
@@ -180,7 +158,7 @@ class TestJSONSaver:
 
     def test_load_vacancies_invalid_json(self, temp_json_file: Path) -> None:
         """Тест загрузки вакансий из поврежденного JSON-файла."""
-        with open(temp_json_file, 'w', encoding='utf-8') as f:
+        with open(temp_json_file, "w", encoding="utf-8") as f:
             f.write("invalid json {")
 
         saver = JSONSaver(str(temp_json_file))
@@ -201,10 +179,10 @@ class TestOtherSavers:
         """Тест, что методы CSVSaver существуют (заглушки)."""
         saver = CSVSaver()
 
-        assert hasattr(saver, 'add_vacancy')
-        assert hasattr(saver, 'get_vacancies')
-        assert hasattr(saver, 'delete_vacancy')
-        assert hasattr(saver, 'clear')
+        assert hasattr(saver, "add_vacancy")
+        assert hasattr(saver, "get_vacancies")
+        assert hasattr(saver, "delete_vacancy")
+        assert hasattr(saver, "clear")
 
         vacancy = Vacancy("Test", "url")
         saver.add_vacancy(vacancy)
@@ -221,10 +199,10 @@ class TestOtherSavers:
         """Тест, что методы TXTSaver существуют (заглушки)."""
         saver = TXTSaver()
 
-        assert hasattr(saver, 'add_vacancy')
-        assert hasattr(saver, 'get_vacancies')
-        assert hasattr(saver, 'delete_vacancy')
-        assert hasattr(saver, 'clear')
+        assert hasattr(saver, "add_vacancy")
+        assert hasattr(saver, "get_vacancies")
+        assert hasattr(saver, "delete_vacancy")
+        assert hasattr(saver, "clear")
 
         vacancy = Vacancy("Test", "url")
         saver.add_vacancy(vacancy)

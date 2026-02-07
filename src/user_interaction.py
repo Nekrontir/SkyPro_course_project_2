@@ -55,7 +55,6 @@ def user_interaction() -> None:
 
                 print(f"Найдено {len(vacancies)} вакансий")
 
-                # Предлагаем сохранить
                 save = input("Сохранить найденные вакансии? (y/n): ").strip().lower()
                 if save == "y":
                     saver.add_vacancies(vacancies)

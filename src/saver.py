@@ -41,7 +41,7 @@ class JSONSaver(VacancySaver):
 
     def __init__(self, filename: str = "data/vacancies.json") -> None:
         """
-        Инициализация JSON-сохранителя.
+        Инициализация JSON-сохранения.
 
         Args:
             filename: Имя файла для сохранения
@@ -77,7 +77,6 @@ class JSONSaver(VacancySaver):
         vacancies = self._load_vacancies()
         vacancy_dict = vacancy.to_dict()
 
-        # Проверка на дубликаты
         if not any(v["id"] == vacancy.id for v in vacancies):
             vacancies.append(vacancy_dict)
             self._save_vacancies(vacancies)
