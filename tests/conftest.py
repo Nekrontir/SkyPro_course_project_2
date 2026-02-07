@@ -1,6 +1,8 @@
-import pytest
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Any, Dict, List
+
+import pytest
+
 from src.vacancy import Vacancy
 
 
@@ -15,7 +17,7 @@ def sample_vacancy_data() -> Dict[str, Any]:
         "currency": "RUR",
         "description": "Разработка на Python",
         "requirements": "Опыт работы от 3 лет, знание Django",
-        "employer": "ООО Технологии"
+        "employer": "ООО Технологии",
     }
 
 
@@ -33,7 +35,7 @@ def sample_vacancy_no_salary() -> Vacancy:
         url="https://hh.ru/vacancy/87654321",
         description="Разработка на Python",
         requirements="Опыт работы от 3 лет",
-        employer="ООО Технологии"
+        employer="ООО Технологии",
     )
 
 
@@ -47,7 +49,7 @@ def sample_vacancy_list() -> List[Vacancy]:
         salary_to=150000,
         currency="RUR",
         requirements="Опыт работы от 3 лет, знание Django",
-        employer="ООО Технологии A"
+        employer="ООО Технологии A",
     )
 
     vacancy2 = Vacancy(
@@ -57,7 +59,7 @@ def sample_vacancy_list() -> List[Vacancy]:
         salary_to=120000,
         currency="RUR",
         requirements="Опыт работы от 2 лет, знание Flask",
-        employer="ООО Технологии B"
+        employer="ООО Технологии B",
     )
 
     vacancy3 = Vacancy(
@@ -67,7 +69,7 @@ def sample_vacancy_list() -> List[Vacancy]:
         salary_to=300000,
         currency="RUR",
         requirements="Опыт работы от 5 лет, знание AWS",
-        employer="ООО Технологии C"
+        employer="ООО Технологии C",
     )
 
     return [vacancy1, vacancy2, vacancy3]
@@ -83,20 +85,17 @@ def sample_api_response() -> List[Dict[str, Any]]:
             "salary": {"from": 100000, "to": 150000, "currency": "RUR"},
             "snippet": {
                 "responsibility": "Разработка на Python",
-                "requirement": "Опыт работы от 3 лет, знание Django"
+                "requirement": "Опыт работы от 3 лет, знание Django",
             },
-            "employer": {"name": "ООО Технологии"}
+            "employer": {"name": "ООО Технологии"},
         },
         {
             "name": "Java Developer",
             "alternate_url": "https://hh.ru/vacancy/87654321",
             "salary": None,
-            "snippet": {
-                "responsibility": "Разработка на Java",
-                "requirement": "Опыт работы от 2 лет"
-            },
-            "employer": {"name": "ООО Программы"}
-        }
+            "snippet": {"responsibility": "Разработка на Java", "requirement": "Опыт работы от 2 лет"},
+            "employer": {"name": "ООО Программы"},
+        },
     ]
 
 

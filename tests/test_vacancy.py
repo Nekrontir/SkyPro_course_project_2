@@ -1,5 +1,6 @@
+from typing import Any, Dict, List
+
 from src.vacancy import Vacancy
-from typing import List, Dict, Any
 
 
 class TestVacancy:
@@ -29,19 +30,11 @@ class TestVacancy:
 
     def test_vacancy_creation_partial_salary(self) -> None:
         """Тест создания вакансии с частично указанной зарплатой."""
-        vacancy1 = Vacancy(
-            name="Developer",
-            url="https://hh.ru/test1",
-            salary_from=100000
-        )
+        vacancy1 = Vacancy(name="Developer", url="https://hh.ru/test1", salary_from=100000)
         assert vacancy1.salary_from == 100000
         assert vacancy1.salary_to == 100000
 
-        vacancy2 = Vacancy(
-            name="Developer",
-            url="https://hh.ru/test2",
-            salary_to=150000
-        )
+        vacancy2 = Vacancy(name="Developer", url="https://hh.ru/test2", salary_to=150000)
         assert vacancy2.salary_from == 150000
         assert vacancy2.salary_to == 150000
 
@@ -75,10 +68,7 @@ class TestVacancy:
 
     def test_from_dict(self, sample_vacancy_data: Dict[str, Any]) -> None:
         """Тест создания вакансии из словаря."""
-        vacancy_dict = {
-            **sample_vacancy_data,
-            "id": "test_id_123"
-        }
+        vacancy_dict = {**sample_vacancy_data, "id": "test_id_123"}
         vacancy = Vacancy.from_dict(vacancy_dict)
 
         assert vacancy.name == vacancy_dict["name"]
@@ -119,5 +109,5 @@ class TestVacancy:
         """Тест использования __slots__ для экономии памяти."""
         vacancy = Vacancy("Test", "url")
 
-        assert hasattr(vacancy, '__slots__')
-        assert not hasattr(vacancy, '__dict__')
+        assert hasattr(vacancy, "__slots__")
+        assert not hasattr(vacancy, "__dict__")
